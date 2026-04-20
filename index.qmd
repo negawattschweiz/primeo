@@ -7,8 +7,32 @@ params:
 
 This is a Quarto website.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
 ```{r}
-1 + 1
+library(tidyverse)
+library(readxl)
+df <- read_excel("data.xlsx")
+tree <- df %>%
+  distinct(col1, col2, col3) %>%
+  arrange(col1, col2, col3)
+print_tree <- function(df) {
+  for (l1 in unique(df$col1)) {
+    cat(l1, "\n")
+    
+    df1 <- df[df$col1 == l1, ]
+    
+    for (l2 in unique(df1$col2)) {
+      cat("  -", l2, "\n")
+      
+      df2 <- df1[df1$col2 == l2, ]
+      
+      for (l3 in unique(df2$col3)) {
+        cat("      -", l3, "\n")
+      }
+      for (l4 in unique(df2$col4)) {
+        cat("      -", l4, "\n")
+      }
+    }
+  }
+}
+print_tree(tree)
 ```
