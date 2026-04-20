@@ -174,8 +174,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data.xlsx"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(col1, col2, col3) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(col1, col2, col3)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(col1, col2, col3, col4) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(col1, col2, col3, col4)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>print_tree <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (l1 <span class="cf">in</span> <span class="fu">unique</span>(df<span class="sc">$</span>col1)) {</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(l1, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
@@ -190,205 +190,117 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (l3 <span class="cf">in</span> <span class="fu">unique</span>(df2<span class="sc">$</span>col3)) {</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"      -"</span>, l3, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (l4 <span class="cf">in</span> <span class="fu">unique</span>(df2<span class="sc">$</span>col4)) {</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"      -"</span>, l4, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print_tree</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        df3 <span class="ot">&lt;-</span> df2[df2<span class="sc">$</span>col3 <span class="sc">==</span> l3, ]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (l4 <span class="cf">in</span> <span class="fu">unique</span>(df3<span class="sc">$</span>col4)) {</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>          <span class="fu">cat</span>(<span class="st">"      -"</span>, l4, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">print_tree</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Employeur/Interne 
   - Bloquer les possibilités de régler manuellement les chauffages. 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Développer un usage raisonné de l'aération par les fenêtres et de l''usage des stores. Également en lien avec les courants d'air. Ouverture la nuit en été. 
+      - NA 
+      - NA 
+  - Développer un usage raisonné de l'aération par les fenêtres et de l''usage des stores. Également en lien avec les courants d'air. Ouverture la nuit en été. 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Faire évoluer le Dresscode, hiver et été. Fournir des couvertures. 
+      - NA 
+      - NA 
+  - Faire évoluer le Dresscode, hiver et été. Fournir des couvertures. 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Inverser les pompes à chaleur en été (si nécessaire et possible). 
+      - NA 
+      - NA 
+  - Inverser les pompes à chaleur en été (si nécessaire et possible). 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Limiter les chauffages et climatisation d'appoint. 
+      - NA 
+      - NA 
+  - Limiter les chauffages et climatisation d'appoint. 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Monitoring et Mettre en place des "stations météo" avec température et humidité. Comparaison des bâtiments. 
+      - NA 
+      - NA 
+  - Monitoring et Mettre en place des "stations météo" avec température et humidité. Comparaison des bâtiments. 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Optimiser le système de ventilation/climatisation. En tenant compte des courants d'air et de l'humidité. Fenêtre, store automatique, aériation du bâtiment, etc. 
+      - NA 
+      - NA 
+  - Optimiser le système de ventilation/climatisation. En tenant compte des courants d'air et de l'humidité. Fenêtre, store automatique, aériation du bâtiment, etc. 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Optimiser les surfaces de bureaux. 
+      - NA 
+      - NA 
+  - Optimiser les surfaces de bureaux. 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Régler les courbes de chauffes (20-21°C) de façon inclusive (genre et âge) et en tenant compte des périodes de chauffage (jour/nuit, semaine/week-end, vacances, début-fin de saison) et des zones (bureaux, ateliers, entrepôts, etc.). 
+      - NA 
+      - NA 
+  - Régler les courbes de chauffes (20-21°C) de façon inclusive (genre et âge) et en tenant compte des périodes de chauffage (jour/nuit, semaine/week-end, vacances, début-fin de saison) et des zones (bureaux, ateliers, entrepôts, etc.). 
       - Bâtiment 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - NA 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Externe 
+      - NA 
+      - NA 
+  - NA 
+      - NA 
+      - NA 
+Externe 
   - Activation de quartier/ville 
       - Clientèle communautaire 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Ajouter un étage aux bâtiments 
+      - NA 
+      - NA 
+  - Ajouter un étage aux bâtiments 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Application Primeo Energie 
+      - NA 
+      - NA 
+  - Application Primeo Energie 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Augmenter le nombre de logements par immeuble/maison. 
+      - NA 
+      - NA 
+  - Augmenter le nombre de logements par immeuble/maison. 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Bibliothèque d'objet dans les immeubles. 
+      - NA 
+      - NA 
+  - Bibliothèque d'objet dans les immeubles. 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Développer l'échange de logement 
+      - NA 
+      - NA 
+  - Développer l'échange de logement 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Développer un carnet de bonnes pratiques pour les métiers de la rénovation et de la construction. 
+      - NA 
+      - NA 
+  - Développer un carnet de bonnes pratiques pour les métiers de la rénovation et de la construction. 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Energybox 2.0 
+      - NA 
+      - NA 
+  - Energybox 2.0 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Thermostat inteligent 
+      - NA 
+      - NA 
+  - Thermostat inteligent 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - Un logement contre une aide. 
+      - NA 
+      - NA 
+  - Un logement contre une aide. 
       - Clientèle communautaire 
       - Clientèle privée 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  - NA 
-      - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Gouvernance 
-  - Établir un bilan entre bénéfice liés à la vente d'énergie et de service versus coût de production et d'nfrastrcuture. 
-      - Placer la sobriété au coeur du débat chez Primeo. </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Transversal 
+      - NA 
+      - NA 
   - NA 
+      - NA 
+      - NA 
+Gouvernance 
+  - Établir un bilan entre bénéfice liés à la vente d'énergie et de service versus coût de production et d'nfrastrcuture. 
+      - Placer la sobriété au coeur du débat chez Primeo. 
+      - NA 
+Transversal 
+  - NA 
+      - NA 
       - NA </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Unknown or uninitialised column: `col4`.</code></pre>
 </div>
 </div>
 
