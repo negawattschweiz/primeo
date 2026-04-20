@@ -12,8 +12,8 @@ library(tidyverse)
 library(readxl)
 df <- read_excel("data.xlsx")
 tree <- df %>%
-  distinct(col1, col2, col3) %>%
-  arrange(col1, col2, col3)
+  distinct(col1, col2, col3, col4) %>%
+  arrange(col1, col2, col3, col4)
 print_tree <- function(df) {
   for (l1 in unique(df$col1)) {
     cat(l1, "\n")
@@ -28,8 +28,10 @@ print_tree <- function(df) {
       for (l3 in unique(df2$col3)) {
         cat("      -", l3, "\n")
       }
-      for (l4 in unique(df2$col4)) {
-        cat("      -", l4, "\n")
+        df3 <- df2[df2$col3 == l3, ]
+        
+        for (l4 in unique(df3$col4)) {
+          cat("      -", l4, "\n")
       }
     }
   }
