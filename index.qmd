@@ -1,8 +1,10 @@
 ---
 title: "primeo"
-format: html
-params:
-  client: ""
+format:
+  html: default
+  docx: default
+execute:
+  echo: false
 ---
 
 This is a Quarto website.
@@ -38,3 +40,9 @@ print_tree <- function(df) {
 }
 print_tree(tree)
 ```
+
+## Export
+
+📄 Télécharger la version Word :
+
+[📄 Télécharger le rapport Word](rapport.docx)
